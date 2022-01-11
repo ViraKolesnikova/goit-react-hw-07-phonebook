@@ -1,33 +1,40 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { Oval } from 'react-loader-spinner';
 
-
-import { fetchContacts } from '../../redux/phonebook/phonebook-operations';
-import {getFilteredContacts} from '../../redux/phonebook/phonebook-selectors'
-
+import { useFetchContactsQuery } from '../../redux/phonebook/phonebook-reducer';
+import { getFilterWord } from '../../redux/phonebook/phonebook-selectors';
 import ContactItem from '../ContactItem';
 import s from './ContactList.module.css';
 
 export default function ContactList() {
-  const filteredContacts = useSelector(getFilteredContacts);
+  const filterWord = useSelector(getFilterWord);
+  const { data, error, isLoading } = useFetchContactsQuery();
 
-  const dispatch = useDispatch();  
+  const getfilteredContacts = contacts =>
+    contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filterWord.toLowerCase()),
+    );
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-  },[dispatch])
+  const filteredContacts = data ? getfilteredContacts(data) : null;
 
   return (
-    <ul className={s.contactList}>
-      {filteredContacts.map(({ id, name, phone }) => (
-        <ContactItem
-        key={id}
-        id={id}
-        name={name}
-        phoneNumber={phone}          
+    <>
+      {isLoading && (
+        <Oval
+          arialLabel="loading-indicator"
+          radius="17.5"
+          height="60"
+          width="60"
+          color="rgb(197 205 208 )"
         />
-        ))}
-    </ul>
-        
+      )}
+      {error && alert('Ooops...')}
+      <ul className={s.contactList}>
+        {data &&
+          filteredContacts.map(({ id, name, phone }) => (
+            <ContactItem key={id} id={id} name={name} phoneNumber={phone} />
+          ))}
+      </ul>
+    </>
   );
 }

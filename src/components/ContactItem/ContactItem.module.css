@@ -9,14 +9,18 @@
   margin-bottom: 0;
 }
 
-.contactContent{
+.contactContent {
   display: flex;
-    flex-grow: 1;
-    justify-content: space-between;
-    margin-right: 16px;
+  flex-grow: 1;
+  justify-content: space-between;
+  margin-right: 16px;
 }
 
 .deleteContactBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 90px;
   padding: 2px 12px;
   margin-left: auto;
   border-radius: 2px;

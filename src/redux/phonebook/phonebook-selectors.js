@@ -1,6 +1,6 @@
 const getContacts = state => state.contacts.items;
 
-const getFilterWord = state => state.contacts.filter;
+const getFilterWord = state => state.filter;
 
 const getFilteredContacts = state => {
   const contacts = getContacts(state);

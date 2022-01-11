@@ -1,18 +1,16 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import shortid from 'shortid';
 import { Oval } from 'react-loader-spinner';
 
-import { saveContact } from '../../redux/phonebook/phonebook-operations';
-
+import { useFetchContactsQuery, useSaveContactMutation } from '../../redux/phonebook/phonebook-reducer';
 import s from './Form.module.css';
 
 export default function Form() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 
-  const contacts = useSelector(state => state.contacts.items);
-  const dispatch = useDispatch();
+  const { data:contacts } = useFetchContactsQuery();
+  const [saveContact, { isLoading, error }] = useSaveContactMutation();
 
   const onSubmitAddContact = event => {
     event.preventDefault();
@@ -22,7 +20,7 @@ export default function Form() {
     };
 
     if (checkContactIdentity() === undefined) {
-      dispatch(saveContact(newContact));
+      saveContact(newContact);
       reset();
     } else {
       alertIdentity(name);
@@ -84,8 +82,10 @@ export default function Form() {
       </button>
       </form>
       <div className={s.loaderContainer}>
-        {contacts.length<1 && <Oval arialLabel="loading-indicator" radius='17.5' height='60' width='60' color='rgb(197 205 208 )'/>}
+        {isLoading &&
+          <Oval arialLabel="loading-indicator" radius='17.5' height='60' width='60' color='rgb(197 205 208 )' />}
       </div>
+      {error && alert('something went wrong!')}
         </>
   );
 }
