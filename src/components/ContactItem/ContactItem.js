@@ -5,7 +5,7 @@ import { useDeleteContactsMutation } from '../../redux/phonebook/phonebook-reduc
 import s from './ContactItem.module.css';
 
 export default function ContactItem({ id, name, phoneNumber }) {
-  const [deleteContact, { isLoading, error }] = useDeleteContactsMutation();
+  const [deleteContact, { isLoading }] = useDeleteContactsMutation();
   return (
     <>
       <li className={s.contactListItem}>

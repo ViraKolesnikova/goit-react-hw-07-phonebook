@@ -4,14 +4,15 @@ import { Oval } from 'react-loader-spinner';
 
 import { useFetchContactsQuery, useSaveContactMutation } from '../../redux/phonebook/phonebook-reducer';
 import s from './Form.module.css';
+import Notification from '../Notiification/Notification';
 
 export default function Form() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 
-  const { data:contacts } = useFetchContactsQuery();
-  const [saveContact, { isLoading, error }] = useSaveContactMutation();
-
+  const { data:contacts, isLoading: loadingContacts } = useFetchContactsQuery();
+  const [saveContact, { isLoading, isError: saveError, isSuccess: saveSuccess }] = useSaveContactMutation();
+    
   const onSubmitAddContact = event => {
     event.preventDefault();
     const newContact = {
@@ -82,10 +83,11 @@ export default function Form() {
       </button>
       </form>
       <div className={s.loaderContainer}>
-        {isLoading &&
+        {(isLoading || loadingContacts) &&
           <Oval arialLabel="loading-indicator" radius='17.5' height='60' width='60' color='rgb(197 205 208 )' />}
+        {saveError && alert('something went wrong!')}
+        {saveSuccess && <Notification message={'New contact is saved to phonebook!'} />}
       </div>
-      {error && alert('something went wrong!')}
         </>
   );
 }
