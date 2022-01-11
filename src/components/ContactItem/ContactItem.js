@@ -1,7 +1,7 @@
 import {  useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/phonebook/phonebook-operations';
 import PropTypes from 'prop-types';
 
+import { deleteContact } from '../../redux/phonebook/phonebook-operations';
 import s from './ContactItem.module.css';
 
 export default function ContactItem({ id, name, phoneNumber }) {
