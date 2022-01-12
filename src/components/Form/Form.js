@@ -14,8 +14,10 @@ export default function Form() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
 
-  const { data: contacts, isLoading: loadingContacts } = useFetchContactsQuery();
-  const [saveContact, { isLoading, isError, isSuccess }] = useSaveContactMutation();
+  const { data: contacts, isLoading: loadingContacts } =
+    useFetchContactsQuery();
+  const [saveContact, { isLoading, isError, isSuccess }] =
+    useSaveContactMutation();
 
   const onSubmitAddContact = event => {
     event.preventDefault();
@@ -24,12 +26,12 @@ export default function Form() {
       phone,
     };
 
-    if (checkContactIdentity() === undefined) {
+    if (!checkContactIdentity()) {
       saveContact(newContact);
       reset();
-    } else {
-      alertIdentity(name);
+      return;
     }
+    alertIdentity(name);
   };
 
   const reset = () => {
@@ -56,35 +58,35 @@ export default function Form() {
       <form className={s.form} onSubmit={onSubmitAddContact}>
         <div className={s.inputWrapper}>
           <label className={s.label} htmlFor={nameID}>
-          Name
-        </label>
-        <input
-          id={nameID}
-          className={s.input}
-          type="text"
-          name="name"
-          value={name}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-          onChange={e => setName(e.target.value)}
-        />
+            Name
+          </label>
+          <input
+            id={nameID}
+            className={s.input}
+            type="text"
+            name="name"
+            value={name}
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+            onChange={e => setName(e.target.value)}
+          />
         </div>
         <div className={s.inputWrapper}>
           <label className={s.label} htmlFor={numberID}>
-          Number
-        </label>
-        <input
-          id={numberID}
-          className={s.input}
-          type="tel"
-          name="number"
-          value={phone}
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
-          onChange={e => setPhone(e.target.value)}
-        />
+            Number
+          </label>
+          <input
+            id={numberID}
+            className={s.input}
+            type="tel"
+            name="number"
+            value={phone}
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+            onChange={e => setPhone(e.target.value)}
+          />
         </div>
         <button className={s.formBtn} type="submit">
           Add contact
@@ -101,7 +103,9 @@ export default function Form() {
           />
         )}
         {isError && <Notification message={'Ooops...Something went wrong'} />}
-        {isSuccess && <Notification message={'New contact is saved to phonebook!'} />}
+        {isSuccess && (
+          <Notification message={'New contact is saved to phonebook!'} />
+        )}
       </div>
     </>
   );

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+
 
 export default function Notification({ message }) {
   const [shouldRender, setShouldRender] = useState(true);
@@ -24,4 +26,8 @@ export default function Notification({ message }) {
       )}
     </>
   );
+}
+
+Notification.propTypes = {
+  message: PropTypes.string.isRequired
 }
