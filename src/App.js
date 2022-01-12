@@ -1,3 +1,5 @@
+import { Toaster } from 'react-hot-toast';
+
 import Form from './components/Form';
 import Filter from './components/Filter';
 import ContactList from './components/ContactList';
@@ -12,6 +14,8 @@ export default function App() {
       <Filter />
 
       <ContactList />
+
+      <Toaster />
     </>
   );
 }

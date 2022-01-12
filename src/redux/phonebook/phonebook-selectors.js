@@ -9,10 +9,6 @@ const getFilteredContacts = state => {
   return contacts.filter(contact =>
     contact.name.toLowerCase().includes(filterWord.toLowerCase()),
   );
-}
+};
 
-export {
-  getContacts,
-  getFilterWord,
-  getFilteredContacts
-}
+export { getContacts, getFilterWord, getFilteredContacts };

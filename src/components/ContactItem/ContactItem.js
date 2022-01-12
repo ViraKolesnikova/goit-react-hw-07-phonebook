@@ -6,6 +6,7 @@ import s from './ContactItem.module.css';
 
 export default function ContactItem({ id, name, phoneNumber }) {
   const [deleteContact, { isLoading }] = useDeleteContactsMutation();
+
   return (
     <>
       <li className={s.contactListItem}>
@@ -18,14 +19,14 @@ export default function ContactItem({ id, name, phoneNumber }) {
           onClick={() => deleteContact(id)}
         >
           Delete
-      {isLoading && (
-        <Oval
-          arialLabel="loading-indicator"
-          height="14"
-          width="14"
-          color="white"
-        />
-      )}
+          {isLoading && (
+            <Oval
+              arialLabel="loading-indicator"
+              height="14"
+              width="14"
+              color="white"
+            />
+          )}
         </button>
       </li>
     </>

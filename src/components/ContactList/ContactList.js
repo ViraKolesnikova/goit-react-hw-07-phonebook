@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 import { useFetchContactsQuery } from '../../redux/phonebook/phonebook-reducer';
 import { getFilterWord } from '../../redux/phonebook/phonebook-selectors';
@@ -18,7 +19,7 @@ export default function ContactList() {
 
   return (
     <>
-      {error && alert('Ooops...')}
+      {error && toast.error(`Ooops...Not Found`)}
       <ul className={s.contactList}>
         {data &&
           filteredContacts.map(({ id, name, phone }) => (

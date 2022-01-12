@@ -9,7 +9,10 @@ export const store = configureStore({
     filter: filterReducer,
     [contactsApi.reducerPath]: contactsApi.reducer,
   },
-  middleware: getDefaultMiddleware => [...getDefaultMiddleware(), contactsApi.middleware]
+  middleware: getDefaultMiddleware => [
+    ...getDefaultMiddleware(),
+    contactsApi.middleware,
+  ],
 });
 
 setupListeners(store.dispatch);

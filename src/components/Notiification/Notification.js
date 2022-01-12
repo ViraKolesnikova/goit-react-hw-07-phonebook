@@ -1,18 +1,27 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react';
 
-
-export default function Notification({message}) {
+export default function Notification({ message }) {
   const [shouldRender, setShouldRender] = useState(true);
 
   useEffect(() => {
-   return setTimeout(() => {
+    return setTimeout(() => {
       setShouldRender(false);
-    }, 3000); 
-  })
+    }, 3000);
+  });
 
   return (
     <>
-    {shouldRender && <p style={{color:'blue'}}>{message}</p>}
+      {shouldRender && (
+        <p
+          style={
+            message === 'New contact is saved to phonebook!'
+              ? { color: 'blue' }
+              : { color: 'red' }
+          }
+        >
+          {message}
+        </p>
+      )}
     </>
-  )
+  );
 }
